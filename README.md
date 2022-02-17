@@ -2,7 +2,7 @@
 A easy and most Efficient Sub-Domain Finder
 To run
 chmod  +x Alain
-./Alain
+sh Alain
 
 
 
