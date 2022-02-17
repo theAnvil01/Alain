@@ -31,9 +31,7 @@ read -p "Choose options from above:" op
                        echo "sublist3r finished his task"
                        	
                     
-                       echo ""
-                       
-             ;;
+                 echo ""  ;;
 
               2)
                 echo "please wait and have some coffee"
@@ -77,13 +75,13 @@ read -p "Choose options from above:" op
                 echo ""
                 
             
-                curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >> /dev/null
+                curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >> /dev/null ;;
                 
                   
                        
                 *) 
-                    echo  " wrong input \n Try Again";;
-      esac              
+                    echo  " wrong input Try Again";;
+               esac              
    
   echo  " options For subdomain: \n1. keep raw \n2. compile and  sort unique domain"
   echo ""
@@ -210,6 +208,15 @@ read -p "Choose options from above:" op
 
                                               
                                              
+                                              
+                                              
+                                                                
+                                   
+       
+        
+         
+                   
+              
                                               
                                               
                                                                 
