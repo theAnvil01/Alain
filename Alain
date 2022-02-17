@@ -1,0 +1,221 @@
+#! /bin/bash
+
+figlet "                Alain"
+echo "              version 1.1.0" "made by theAnvil01"
+echo "       You can also connect me on telegram : @theAnvil01"
+ echo "                Efficient Sub-Domain Finder" 
+ echo "" 
+
+
+
+
+
+            echo "Enter your domain:" ; read dom
+
+                 ping -c 2 $dom > /dev/null
+echo ""
+echo ""
+mkdir "$dom"
+cd "$dom"
+echo  "Available options: \n1. Want to use sublist3r only \n2. Want to use amass and sublist3r (slow but Efficient) \n3. want to Use Crt.sh(Quick) \n4. Want to use all Three"
+echo "" 
+read -p "Choose options from above:" op 
+
+  
+  case $op in
+              1)       echo "please wait and have some coffee"
+                       echo "starting up sublist3r..." && echo "sublist3r started" && sublist3r -d $dom -o sublist3r.$dom.txt >>/dev/null
+                       echo ""
+                       
+               
+                       echo "sublist3r finished his task"
+                       	
+                    
+                       echo ""
+                       
+             ;;
+
+              2)
+                echo "please wait and have some coffee"
+                echo ""
+                 echo " Starting up amass" && echo "amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
+                echo ""
+              
+                
+	        echo ""
+                echo "amass finished his task"
+                echo "" 
+                echo "starting up sublister..." && echo "sublist3r started"  && sublist3r -d $dom -o sublis3r.$dom.txt >>/dev/null 
+                echo ""
+                echo "sublister finished his task"
+                echo ""
+                
+
+               
+                echo " finishing up things"
+                
+         
+                echo "exiting" ;;
+               
+               3)
+                  curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >>/dev/null
+                   ;;
+
+               4)   
+                    echo "please wait and have some coffee"
+                   
+                    echo "starting up sublist3r..." && echo "sublist3r started" && sublist3r -d $dom -o sublis3r.$dom.txt >>/dev/null
+                    echo ""
+                    echo "sublist3r finished his task"
+                    echo ""
+                    
+                  
+                 echo " Starting up amass" && echo "amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
+                echo ""
+	        echo ""
+                echo "amass finished his task"
+                echo ""
+                
+            
+                curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >> /dev/null
+                
+                  
+                       
+                *) 
+                    echo  " wrong input \n Try Again";;
+      esac              
+   
+  echo  " options For subdomain: \n1. keep raw \n2. compile and  sort unique domain"
+  echo ""
+  echo ""
+  read -p "choose options from above(2 recommended)" sort
+   
+   case $sort in 
+   
+      1) echo " keeping it Raw"
+         echo ""
+     
+         echo "" 
+         echo "Bye,keep hunting bugs"
+         echo ""
+         echo ""
+         echo "";;
+       
+       2)  echo "sorting unique domains" &&  cat *.txt | sort -u >> "$dom(unique).txt" 
+
+          echo ""
+          echo ""
+        
+
+          echo "Done"
+          echo ""
+          echo "";;
+        
+        *) echo "invalid option,Try Again";;  
+        
+ esac 
+       echo "Total unique sub-domain:"; cat "$dom(unique).txt" | wc -l 
+       echo ""
+       echo ""
+       echo " have a cheerfull day"
+       
+ echo  "Do you Want to use FFUf to getworking subdomains. \n1. Yes  \n2. No"
+ echo "" 
+ read -p "(Choose 1/2)" mn
+ 
+   case $mn in 
+             
+              1) echo " You have Selected yes,We use ffuf to get working sub domains."
+                 echo ""  
+                 echo "*Note the output will be in html format*"
+                    echo  "What protocol do you want to use \n1. Https \n2. Http " 
+                    echo ""
+                    read -p "what you want to choose (1/2)" pro
+                    
+                                 case $mn in  
+                                           1) echo ""
+                                              echo "Using  Https Protocol."
+                                              echo "" 
+                                              echo "What status code Do you want: \n1. 200 \n2. 200,301,302"
+                                              echo "" 
+                                              read -p "Choose options from above(1/2): " code
+                                              
+                                       case $code in 
+                                                   
+                                                 1) echo "" 
+                                                     echo "searching For status code 200" 
+                                                              echo "" 
+                                                              
+                                                 ffuf -u https://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200  -o "$dom(200).html" >> /dev/null
+                                                    echo ""
+                                                    echo "Fuzzing is done. file is been saved as $dom(200).html ";;
+                                                    
+                                             2)     echo "" 
+                                                    echo "searching for status code 200,301,302"     
+                                                    echo ""
+                                         ffuf -u https://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200,301,302  -o "$dom(200,301,302).html" >> /dev/null
+                                                    
+                                                   echo "" 
+                                                   echo " Fuzzing is done. File is been saved as $dom(200,301,302).html";;
+                                                   
+                                             *) echo "Invalid Options, try again" ;;
+                                             
+                                             esac ;;
+                               
+                            
+                               
+                                   2)  echo "Using Http Protocol" 
+                                        echo "" 
+                                              echo "What status code Do you want: \n1. 200 \n2. 200,301,302"
+                                              echo "" 
+                                              read -p "Choose options from above(1/2): " cod1
+                                              
+                                       case $cod1 in 
+                                                   
+                                                 1) echo "searching For status code 200" 
+                                                              echo "" 
+                                                              
+                                                 ffuf -u http://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200  -o "$dom(200).html" >> /dev/null
+                                                    echo ""
+                                                    echo "Fuzzing is done. file is been saved as $dom(200).html ";;
+                                                    
+                                             2) echo "searching for status code 200,301,302"     
+                                                    echo ""
+                                         ffuf -u http://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200,301,302  -o "$dom(200,301,302).html" >> /dev/null
+                                                    
+                                                   echo "" 
+                                                   echo " Fuzzing is done. File is been saved as $dom(200,301,302).html";;
+                                                   
+                                             *) echo "Invalid Options, try again" ;;
+                                             
+                                             esac ;;
+                                             
+                                             *) echo "Invalid Options";;
+                                             
+                                             esac;;
+                                             
+                                             
+                                             2) echo "You have choosed NO";;
+                                             
+                                             *) echo "invalid options";;
+                                             
+                                             esac
+                                             
+                                             
+                                             
+                               
+                                               
+                                             
+                                                              
+
+                                              
+                                             
+                                              
+                                              
+                                                                
+                                   
+       
+        
+         
+                   
+              
