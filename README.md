@@ -13,13 +13,19 @@ sh Alain
  ffuf
  
 *Installlation*
+ 
  git clone https://github.com/theAnvil01/Alain.git
+ 
  cd Alain
+ 
  chmod +x Alain (main tool)
+ 
  chmod +x insatll.sh (for  installing all necessary tools)
+ 
  chmod +x AlainUpdater ( for Updating Alain)
  
  To Run this tool, 
+ 
  sudo sh Alain  
    
    if any error occurs feel free to contact me on telegram @theAnvil01 
