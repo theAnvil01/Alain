@@ -9,10 +9,22 @@ echo "       You can also connect me on telegram : @theAnvil01"
 
 
 
-
-            echo "Enter your domain:" ; read dom
-
-                 ping -c 2 $dom > /dev/null
+          read -p "Enter your domain: " dom 
+          echo "" 
+          echo "Want to ping Domain for checking , host is up or Not" 
+          read -p "(yes/no)"  ping 
+          
+          case $ping in 
+               
+                yes) 
+                       echo " starting ping $dom" 
+                       ping -c 4 $dom ;;
+                       
+                no)    echo "You selected No";;
+                 
+                 *) echo "invalid Options, try Again" ''
+                 
+                 esac       
 echo ""
 echo ""
 mkdir "$dom"
