@@ -1,0 +1,29 @@
+#!/bin/bash 
+figlet "Alain Updater" 
+echo "               This will update your Alain quickly" 
+echo "           You can connect me in telegram : @theAnvil01"
+echo "" 
+echo "NOTE:-this will remove all your data Related ALain, please Backup your data related to it" 
+echo ""
+read -p "Are you sure to run Alain Updater(yes/no)" op 
+  
+     case $op  in 
+     
+     
+   yes)  cd .. >> /dev/null 
+rm -r Alain >> /dev/null
+git clone https://github.com/theAnvil01/Alain.git >> /dev/null
+cd Alain 
+chmod +x Alain
+chmod +x install.sh
+chmod +x AlainUpdater
+
+echo "Alain is been updated,Please reopen Alain folder" ;;
+
+no) 
+
+       echo "updating is not been done, Have a nice day";;
+       
+       *)  echo "invalid option, Try Again Later "  ;;
+       
+       esac 
