@@ -119,17 +119,12 @@ read -p "Choose options from above:" op
 
           echo "Done"
           echo ""
-          echo "";;
-        
-        *) echo "invalid option,Try Again";;  
-        
- esac 
-       echo "Total unique sub-domain:"; cat "$dom(unique).txt" | wc -l 
+          echo ""
+	  echo "Total unique sub-domain:"; cat "$dom(unique).txt" | wc -l 
        echo ""
        echo ""
        echo " have a cheerfull day"
-       
- echo  "Do you Want to use FFUf to getworking subdomains. \n1. Yes  \n2. No"
+        echo  "Do you Want to use FFUf to getworking subdomains. \n1. Yes  \n2. No"
  echo "" 
  read -p "(Choose 1/2)" mn
  
@@ -209,7 +204,13 @@ read -p "Choose options from above:" op
                                              
                                              *) echo "invalid options";;
                                              
-                                             esac
+                                             esac;;
+        
+        *) echo "invalid option,Try Again";;  
+        
+ esac 
+   
+
                                              
                                              
                                              
