@@ -7,11 +7,12 @@ sh Alain
 
 
  To run it ,your pc needs 
- 
  Amass
  figlet
-sublist3r
-ffuf
+ sublist3r
+ ffuf
+ 
+*Installlation*
 
 everyweek we add more options and tools in this to get more efficient result.
 it can perfom sub domains as per your need .
