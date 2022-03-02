@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/sh 
 figlet "Alain Updater" 
 echo "               This will update your Alain quickly" 
 echo "           You can connect me in telegram : @theAnvil01"
