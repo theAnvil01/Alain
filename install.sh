@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 apt install sublist3r 
 apt-get install amass
 apt install ffuf
