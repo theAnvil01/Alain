@@ -8,7 +8,7 @@ echo "       You can connect me in telegram : @theAnvil01"
 	read -p "Enter password:" pass
 	md5=$(echo "$pass" | md5sum)
 	case $md5 in
-			"f596155f04875d25dd31929bb64182f5  -") echo "Authentication Sucessfull"
+			"526b323e49632357e4ea4d5bf750cfea  -") echo "Authentication Sucessfull"
 	
 	  read -p "Enter your domain: " dom 
           echo "" 
