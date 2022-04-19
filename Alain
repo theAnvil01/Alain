@@ -1,15 +1,16 @@
 #!/bin/sh
 
 figlet "                Alain"
-echo "              version 1.1.0" "made by theAnvil01"
-echo "       You can also connect me on telegram : @theAnvil01"
+echo "              version 1.2.0" "made by theAnvil01"
+echo "       You can connect me in telegram : @theAnvil01"
  echo "                Efficient Sub-Domain Finder" 
  echo "" 
-
-
-
-
-          read -p "Enter your domain: " dom 
+	read -p "Enter password:" pass
+	md5=$(echo "$pass" | md5sum)
+	case $md5 in
+			"f596155f04875d25dd31929bb64182f5  -") echo "Authentication Sucessfull"
+	
+	  read -p "Enter your domain: " dom 
           echo "" 
           echo "Want to ping Domain for checking , host is up or Not" 
           read -p "(yes/no)"  ping 
@@ -24,18 +25,19 @@ echo "       You can also connect me on telegram : @theAnvil01"
                  
                  *) echo "invalid Options, try Again" ''
                  
-                 esac       
+                 esac        
 echo ""
 echo ""
-mkdir "$dom"
-cd "$dom"
-echo  "Available options: \n1. Want to use sublist3r only \n2. Want to use amass and sublist3r (slow but Efficient) \n3. want to Use Crt.sh(Quick) \n4. Want to use all Three"
+
+echo  "Available options: \n1. Want to use sublist3r only \n2. Want to use amass and sublist3r (slow but Efficient) \n3. want to Use Crt.sh(Quick) \n4. Want to use all Three \n5. Amass only"
 echo "" 
 read -p "Choose options from above:" op 
 
   
   case $op in
-              1)       echo "please wait and have some coffee"
+              1)       mkdir "$dom"
+			cd "$dom"
+                       echo "please wait and have some coffee"
                        echo "starting up sublist3r..." && echo "sublist3r started" && sublist3r -d $dom -o sublist3r.$dom.txt >>/dev/null
                        echo ""
                        
@@ -46,6 +48,8 @@ read -p "Choose options from above:" op
                  echo ""  ;;
 
               2)
+              mkdir "$dom"
+                cd "$dom"
                 echo "please wait and have some coffee"
                 echo ""
                  echo " Starting up amass" && echo "amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
@@ -68,28 +72,37 @@ read -p "Choose options from above:" op
                 echo "exiting" ;;
                
                3)
+                   mkdir "$dom"
+		cd "$dom"
                   curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >>/dev/null
                    ;;
 
-               4)   
+               4)
+                  mkdir "$dom"
+                  cd "$dom"   
                     echo "please wait and have some coffee"
                    
-                    echo "starting up sublist3r..." && echo "sublist3r started" && sublist3r -d $dom -o sublis3r.$dom.txt >>/dev/null
+                    echo " starting up sublist3r..." && echo "   sublist3r started" && sublist3r -d $dom -o sublis3r.$dom.txt >>/dev/null
                     echo ""
-                    echo "sublist3r finished his task"
+                    echo " sublist3r finished his task"
                     echo ""
                     
                   
-                 echo " Starting up amass" && echo "amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
+                 echo "Starting up amass" && echo "    amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
                 echo ""
 	        echo ""
                 echo "amass finished his task"
                 echo ""
                 
             
-                curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee $dom.txt >> /dev/null ;;
-                
-                  
+             curl -s https://crt.sh/\?q\=%25.$dom\&output\=json | jq -r ' .[].name_value' | sed 's/\*\.//g' | tee crt.$dom.txt >> /dev/null ;;
+             
+               
+               5)mkdir "$dom"
+                  cd "$dom"	
+                echo "" 
+                echo " Starting up amass" && echo "amass  started" && amass enum  -d $dom -o amass.$dom.txt >> /dev/null
+                  echo "done";;
                        
                 *) 
                     echo  " wrong input Try Again";;
@@ -120,84 +133,33 @@ read -p "Choose options from above:" op
           echo "Done"
           echo ""
           echo ""
-	  echo "Total unique sub-domain:"; cat "$dom(unique).txt" | wc -l 
+        echo "Total unique sub-domain:"; cat "$dom(unique).txt" | wc -l 
        echo ""
        echo ""
-       echo " have a cheerfull day"
-        echo  "Do you Want to use FFUf to getworking subdomains. \n1. Yes  \n2. No"
+       echo "want to resolve urls "
+        echo  "Want to get resolved urls with status code. \n1. Yes  \n2. No"
  echo "" 
  read -p "(Choose 1/2)" mn
  
    case $mn in 
              
-              1) echo " You have Selected yes,We use ffuf to get working sub domains."
-                 echo ""  
-                 echo "*Note the output will be in html format*"
-                    echo  "What protocol do you want to use \n1. Https \n2. Http " 
-                    echo ""
-                    read -p "what you want to choose (1/2)" pro
-                    
-                                 case $mn in  
-                                           1) echo ""
-                                              echo "Using  Https Protocol."
-                                              echo "" 
-                                              echo "What status code Do you want: \n1. 200 \n2. 200,301,302"
-                                              echo "" 
-                                              read -p "Choose options from above(1/2): " code
-                                              
-                                       case $code in 
-                                                   
-                                                 1) echo "" 
-                                                     echo "searching For status code 200" 
-                                                              echo "" 
-                                                              
-                                                 ffuf -u https://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200  -o "$dom(200).html" >> /dev/null
-                                                    echo ""
-                                                    echo "Fuzzing is done. file is been saved as $dom(200).html ";;
-                                                    
-                                             2)     echo "" 
-                                                    echo "searching for status code 200,301,302"     
-                                                    echo ""
-                                         ffuf -u https://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200,301,302  -o "$dom(200,301,302).html" >> /dev/null
-                                                    
-                                                   echo "" 
-                                                   echo " Fuzzing is done. File is been saved as $dom(200,301,302).html";;
-                                                   
-                                             *) echo "Invalid Options, try again" ;;
-                                             
-                                             esac ;;
-                               
+              1) echo " resolving subdomains"
+               echo "we use httpx for this method " 
+                    cat "$dom(unique).txt" | httpx -status-code | tee httpx >> /dev/null
+                    echo "all finished "
+                    echo "Cleaning the mess"
+                           rm *.txt
+                           mv httpx urls.txt
+                            echo "Total acquired subdomains:" 
+                        cat urls.txt | wc -l 
+                     echo ""
+                     echo "status 200 code urls:"
+                     cat urls.txt | grep 200 | wc -l 
+                     echo "exiting" ;;
+                                      
                             
                                
-                                   2)  echo "Using Http Protocol" 
-                                        echo "" 
-                                              echo "What status code Do you want: \n1. 200 \n2. 200,301,302"
-                                              echo "" 
-                                              read -p "Choose options from above(1/2): " cod1
-                                              
-                                       case $cod1 in 
-                                                   
-                                                 1) echo "searching For status code 200" 
-                                                              echo "" 
-                                                              
-                                                 ffuf -u http://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200  -o "$dom(200).html" >> /dev/null
-                                                    echo ""
-                                                    echo "Fuzzing is done. file is been saved as $dom(200).html ";;
-                                                    
-                                             2) echo "searching for status code 200,301,302"     
-                                                    echo ""
-                                         ffuf -u http://FUZZ -w "$dom(unique).txt"  -of html -o fuzz.html -mc 200,301,302  -o "$dom(200,301,302).html" >> /dev/null
-                                                    
-                                                   echo "" 
-                                                   echo " Fuzzing is done. File is been saved as $dom(200,301,302).html";;
-                                                   
-                                             *) echo "Invalid Options, try again" ;;
-                                             
-                                             esac ;;
-                                             
-                                             *) echo "Invalid Options";;
-                                             
-                                             esac;;
+                                          
                                              
                                              
                                              2) echo "You have choosed NO";;
@@ -205,13 +167,16 @@ read -p "Choose options from above:" op
                                              *) echo "invalid options";;
                                              
                                              esac;;
-        
-        *) echo "invalid option,Try Again";;  
-        
- esac 
-   
-
                                              
+        
+     				   *) echo "invalid option,Try Again";;  
+        
+ 					esac;;
+ 					
+ 
+	*) echo "incorrect password,try again";;
+	esac
+	
                                              
                                              
                                
@@ -221,15 +186,6 @@ read -p "Choose options from above:" op
 
                                               
                                              
-                                              
-                                              
-                                                                
-                                   
-       
-        
-         
-                   
-              
                                               
                                               
                                                                 
